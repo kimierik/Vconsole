@@ -13,6 +13,7 @@
 
 
 
+//variable types
 enum vartype{
     intiger,
     floatingpoint,
@@ -30,6 +31,7 @@ struct cstrcomp{
 
 
 
+//struct that constains the variable and info on what the variable is
 struct ExposedVariable{
     vartype type;
     void* value;
@@ -72,13 +74,12 @@ class VConsole{
 
     private:
 
-
     
     //parses the command 
-    //the dude conpares the first (strlen of function name in func map) chars to the string that is given
     void parseCommand(const char* text, int len);
 
 
+    //adds default functionality like mod and tell
     void addDefaultFunctions();
 
     //append char to input text
@@ -93,11 +94,8 @@ class VConsole{
         }
     }
 
-
-
     void enter(){
         //parse text
-        //printf("%s\n",input_text);
         parseCommand(input_text, string_len);
         //add to history
 
@@ -119,14 +117,17 @@ class VConsole{
 
     ExposedVariable* getVar(const char*name);
 
+    //adds a function to callable functions
     void addFunciton(const char* name, void(*funcion)(char*));
 
+    //exposes a variable to the console
     void exposeVariable(const char* name, void* variable, vartype type){
         ExposedVariable v={type,variable};
         exposedVariables.insert(std::pair<const char*, ExposedVariable>(name,v));
     }
 
 
+    //handles input
     void update(){
         int key=GetKeyPressed();
         if(key!=0){
@@ -147,6 +148,7 @@ class VConsole{
 
 
 
+    //draws input and history
     void drawinput(){
         //hardcoded things
         DrawText(input_text,400,400,12,BLACK);
